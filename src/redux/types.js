@@ -1,0 +1,4 @@
+export const GET_TABLE_LOAD = 'GET_TABLE_LOAD'
+export const GET_TABLE_SUCCESS = 'GET_TABLE_SUCCESS'
+
+export const DELETE_TABLE_ROW = 'DELETE_TABLE_ROW'

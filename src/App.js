@@ -1,25 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import Table from './componets/Table'
+import { getTable } from './redux/actions'
+import {connect} from 'react-redux'
+import Loader from './componets/Loader'
 
-function App() {
+const App = ({getTable, loading, tableData}) => {
+  useEffect(() => {
+    getTable()
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {loading ? <Loader/> : <Table id='table' data={
+        {
+          name: 'Таблица учеников',
+          description: 'Ученики проходящие обучение в 2022 году',
+          structure: [
+            {
+              id: 'name',
+              title: 'Имя'
+            },
+            {
+              id: 'age',
+              title: 'Возраст'
+            },
+            {
+              id: 'gender',
+              title: 'Пол'
+            },
+            {
+              id: 'grade',
+              title: 'Оценка'
+            },
+            {
+              id: 'profession',
+              title: 'Проффесия'
+            },
+          ],
+          dataTable: tableData
+        }
+      } />}
     </div>
   );
 }
 
-export default App;
+const mapDispatchToProps = ({
+  getTable: getTable
+})
+
+const mapStateToProps = state => ({
+  loading: state.loading,
+  tableData: state.data
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
